@@ -10,6 +10,8 @@ const usersRouter = require('./routes/users');
 const testAPIRouter = require('./routes/testAPI');
 
 const app = express();
+const server = require('http').Server(app)
+const io = require('socket.io')(server);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,4 +44,23 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+// socket 
+io.on('connection', (socket) => {
+
+  console.log('client has connected to the socket at PORT 9000');
+
+  socket.on('ADD_MESSAGE', function(data) {
+    io.emit('RECEIVE_MESSAGE', data)
+  });
+
+  socket.on('ADD_USER', function(data) {
+    io.emit('RECEIVE_USER', data)
+  });
+
+  socket.on('LOGOUT_USER', function(data) {
+    io.emit('REMOVE_USER', data)
+  });
+
+});
+
+module.exports = {app: app, server: server}
