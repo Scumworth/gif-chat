@@ -45,13 +45,17 @@ app.use(function(err, req, res, next) {
 });
 
 // socket 
-io.on('connection', (socket) => {
+io.on('connection', socket => {
 
-  console.log('client has connected to the socket at PORT 9000');
+  console.log('a client has connected');
+
+  socket.on('DISCONNECT', function(data) {
+    console.log(`${data.userID} has disconnected`);
+  });
 
   socket.on('ADD_MESSAGE', function(data) {
-    io.emit('RECEIVE_MESSAGE', data)
-  });
+    console.log('message received by server');
+    io.emit('RECEIVE_MESSAGE', data) });
 
   socket.on('ADD_USER', function(data) {
     io.emit('RECEIVE_USER', data)
