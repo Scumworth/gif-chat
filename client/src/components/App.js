@@ -5,7 +5,6 @@ import { Grid } from '@material-ui/core';
 import './App.css';
 
 import GifBox from './GifBox';
-import LoginBox from './LoginBox';
 import MessageBox from './MessageBox';
 import UserBox from './UserBox'
 import TalkBox from './TalkBox'
@@ -17,7 +16,7 @@ const socket = io('http://localhost:9000');
 
 export default function App() {
   
-  const [userID, setUserID] = useState('');
+  const [ userID, setUserID] = useState('');
   const [ online, setOnline ] = useImmer([]);
   const [ messages, setMessages ] = useImmer([]);
 
@@ -54,13 +53,12 @@ export default function App() {
 
   return (
     <div>
-      <Header />
-      <LoginBox userID = {userID} socket={socket}/>
+      <Header userID={userID} socket={socket} />
       <Grid container>
-        <Grid item xs>
+        <Grid item xs={12} md={3}>
           <UserBox/>
         </Grid>
-        <Grid item xs>
+        <Grid item xs={12} md={9}>
           <MessageBox messages={messages} />
         </Grid>
       </Grid>
