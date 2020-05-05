@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { useImmer } from 'use-immer';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
@@ -16,7 +16,10 @@ const socket = io('http://localhost:9000');
 
 export default function App() {
   
-  const [ userID, setUserID] = useState('');
+  const [ userState, setUserState] = useReducer(
+    (userState, newUserState) => ({...userState, ...newUserState}),
+    {userID: '', loginStatus: false}
+  );
   const [ online, setOnline ] = useImmer([]);
   const [ messages, setMessages ] = useImmer([]);
 
@@ -46,14 +49,14 @@ export default function App() {
     // diconnect socket when component unmounts
     return () => {
       socket.emit('DISCONNECT', {
-        userID: userID
+        userID: userState.userID
       });
     }
   }, []); // empty array as second argument in useEffect to only define on first render
 
   return (
     <div>
-      <Header userID={userID} socket={socket} />
+      <Header userID={userState.userID} loginStatus = {userState.loginStatus} setUserState={setUserState}  socket={socket} />
       <Grid container>
         <Grid item xs={12} md={3}>
           <UserBox/>
@@ -62,7 +65,7 @@ export default function App() {
           <MessageBox messages={messages} />
         </Grid>
       </Grid>
-      <TalkBox userID = {userID} socket={socket}/>
+      <TalkBox userID = {userState.userID} socket={socket}/>
       <GifBox />
       <Footer />
     </div>

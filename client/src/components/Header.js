@@ -26,13 +26,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header({userID, socket}) {
+export default function Header({userID, setUserState, socket, loginStatus}) {
   
-  const [loginStatus, setLoginStatus ] = useState(false);
+  const [loginInput, setLoginInput] = useState('');
   const classes = useStyles();
-  if(userID.length > 0) {
-      setLoginStatus(true);
+
+  const handleChange = (event) => {
+    setLoginInput(event.target.value);
   }
+  const handleEnterKey = (event) => {
+    if(event.key == 'Enter' && loginInput.length > 0) {
+      setUserState({userID: loginInput, loginStatus: true});
+    }
+  }
+  const handleLogin = (event) => {
+    if(loginInput.length > 0){
+      setUserState({userID: loginInput, loginStatus: true}); 
+    }
+  };
+
+  const handleLogout = (event) => {
+    setUserState({userID: '', loginStatus: false});
+  };
+  
   return (
     <div>
       <AppBar position="static">
@@ -41,19 +57,25 @@ export default function Header({userID, socket}) {
             Gif Chat
           </Typography>
           {
-            true ?
+            !loginStatus ?
               <div>
               <InputBase
                 placeholder="Username"
+                onChange={handleChange}
+                onKeyPress={handleEnterKey}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
                 inputProps={{ 'aria-label': 'login' }}
               />
-              <Button color="inherit">Login</Button>
+              <Button onClick = {handleLogin} color="inherit">Login</Button>
               </div>
-              : null
+              : 
+              <div>
+                <Typography> Hello { userID }</Typography>
+                <Button onClick={handleLogout} color="inherit">Logout</Button>
+              </div>
           }
         </Toolbar>
       </AppBar>
