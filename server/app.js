@@ -57,12 +57,14 @@ io.on('connection', socket => {
     console.log('message received by server');
     io.emit('RECEIVE_MESSAGE', data) });
 
-  socket.on('ADD_USER', function(data) {
-    io.emit('RECEIVE_USER', data)
+  socket.on('ADD_USER', function(userID) {
+    console.log('Adding user');
+    io.emit('RECEIVE_USER', userID)
   });
 
-  socket.on('LOGOUT_USER', function(data) {
-    io.emit('REMOVE_USER', data)
+  socket.on('LOGOUT_USER', function(userID) {
+    console.log('Removing user');
+    io.emit('REMOVE_USER', userID)
   });
 
 });

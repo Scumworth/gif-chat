@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function UserBox() {
+export default function UserBox({online}) {
   return (
     <div>
-      UserBox
+      {online.map(user => <p>{user}</p>)}
     </div>
   );
 }

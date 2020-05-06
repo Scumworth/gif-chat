@@ -36,7 +36,7 @@ export default function App() {
 
     socket.on('REMOVE_USER', userID => {
       setOnline(draft => {
-        draft.filter(user => user !== userID);
+        return draft.filter(user => user != userID);
       });
     });
 
@@ -64,7 +64,7 @@ export default function App() {
       />
       <Grid container>
         <Grid item xs={12} md={3}>
-          <UserBox/>
+          <UserBox online = {online} />
         </Grid>
         <Grid item xs={12} md={9}>
           <MessageBox messages={messages} />

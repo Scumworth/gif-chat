@@ -40,11 +40,13 @@ export default function Header({userID, loginInput, setUserState, socket, loginS
   }
   const handleLogin = (event) => {
     if(loginInput.length > 0){
+      socket.emit('ADD_USER', loginInput);
       setUserState({userID: loginInput, loginStatus: true}); 
     }
   };
 
   const handleLogout = (event) => {
+    socket.emit('LOGOUT_USER', loginInput);
     setUserState({userID: '', loginInput: '', loginStatus: false});
   };
   
