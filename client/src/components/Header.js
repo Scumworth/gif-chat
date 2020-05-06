@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: 'inherit',
+    width: '70%'
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -35,6 +36,7 @@ export default function Header({userID, loginInput, setUserState, socket, loginS
   }
   const handleEnterKey = (event) => {
     if(event.key == 'Enter' && loginInput.length > 0) {
+      socket.emit('ADD_USER', loginInput);
       setUserState({userID: loginInput, loginStatus: true});
     }
   }

@@ -1,13 +1,28 @@
 import React, { useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
+import { Box, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import MessageIcon from '@material-ui/icons/Message';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginLeft: '0 auto',
     width: '75%',
-    maxHeight: '200px',
+    minHeight: '100px',
+    maxHeight: '400px',
     overflow: 'auto',
+    borderRadius: '5px',
+  },
+  listWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '20px',
+    marginTop: '10px'
+  },
+  messageWrapper: {
+    backgroundColor: '#fafafa',
+    borderRadius: '5px',
+    marginBottom: '5px'
   }
 }));
 
@@ -21,18 +36,22 @@ export default function MessageBox({messages}) {
   const classes = useStyles();
 
   return (
-    <List className={classes.root}>
-      { 
-        messages.map(data => {
-          return (
-            <ListItem>
-              <ListItemIcon><MessageIcon /></ListItemIcon>
-              <ListItemText primary={ data.userID + ":   " + data.message }/>
-            </ListItem>
-          );
-        })
-      }
-      <div ref={endChatWindowRef} />
-    </List>
+    <Box className={classes.listWrapper}>
+      <List className={classes.root}>
+        { 
+          messages.map(data => {
+            return (
+              <Box className={classes.messageWrapper}>
+              <ListItem>
+                <ListItemIcon><MessageIcon /></ListItemIcon>
+                <ListItemText primary={ data.userID + ":   " + data.message }/>
+              </ListItem>
+              </Box>
+            );
+          })
+        }
+        <div ref={endChatWindowRef} />
+      </List>
+    </Box>
   )
 }

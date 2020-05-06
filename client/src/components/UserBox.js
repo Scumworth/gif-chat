@@ -1,22 +1,33 @@
 import React from 'react';
-import { List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
+import { Box, List, ListItem, ListItemText, ListItemIcon, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import PersonIcon from '@material-ui/icons/Person';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: '5px',
+  }
+}));
+
 export default function UserBox({online}) {
+
+  const classes = useStyles();
+
   return (
-    <div>
-      <List>
-        {
-          online.map(user => {
-            return (
-              <ListItem>
-                <ListItemIcon><PersonIcon /></ListItemIcon>
-                <ListItemText primary={user}/>
-              </ListItem>
-            );
-          })
-        }
-      </List>
-    </div>
+    <Box className= {classes.root}>
+      <Typography variant="overline">{online.length} users online.</Typography>
+        <List>
+          {
+            online.map(user => {
+              return (
+                <ListItem>
+                  <ListItemIcon><PersonIcon /></ListItemIcon>
+                  <ListItemText primary={user}/>
+                </ListItem>
+              );
+            })
+          }
+        </List>
+    </Box>
   );
 }

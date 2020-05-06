@@ -13,6 +13,20 @@ import Footer from './Footer';
 
 const io = require('socket.io-client');
 const socket = io('http://localhost:9000');
+const useStyles = makeStyles((theme) => ({
+  appWrapper: {
+    minWidth: '320px',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+  },
+  contentWrapper: {
+    flex: '1 0 auto',
+  },
+  footerWrapper: {
+    flexShrink: 0,
+  },
+}));
 
 export default function App() {
   
@@ -22,6 +36,7 @@ export default function App() {
   );
   const [ online, setOnline ] = useImmer([]);
   const [ messages, setMessages ] = useImmer([]);
+  const classes = useStyles();
 
   useEffect(() => {
 
@@ -54,28 +69,30 @@ export default function App() {
     }
   }, []); // empty array as second argument in useEffect to only define on first render
   return (
-    <div>
-      <Header 
-        userID={userState.userID} 
-        loginStatus = {userState.loginStatus} 
-        loginInput = {userState.loginInput}
-        setUserState={setUserState}  
-        socket={socket} 
-      />
-      <Grid container>
-        <Grid item xs={12} md={3}>
-          <UserBox online = {online} />
+    <div className = { classes.appWrapper }>
+      <div className={ classes.contentWrapper }>
+        <Header 
+          userID={userState.userID} 
+          loginStatus = {userState.loginStatus} 
+          loginInput = {userState.loginInput}
+          setUserState={setUserState}  
+          socket={socket} 
+        />
+        <Grid container>
+          <Grid item xs={12} md={2}>
+            <UserBox online = {online} />
+          </Grid>
+          <Grid item xs={12} md={10}>
+            <MessageBox messages={messages} />
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={9}>
-          <MessageBox messages={messages} />
-        </Grid>
-      </Grid>
-      <TalkBox 
-        userID = {userState.userID} 
-        loginStatus = {userState.loginStatus}
-        socket={socket}
-      />
-      <GifBox />
+        <TalkBox 
+          userID = {userState.userID} 
+          loginStatus = {userState.loginStatus}
+          socket={socket}
+        />
+        <GifBox />
+      </div>
       <Footer />
     </div>
   );
