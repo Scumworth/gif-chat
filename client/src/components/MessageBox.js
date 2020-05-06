@@ -1,14 +1,22 @@
 import React from 'react';
-import { Card, Paper, Typography } from '@material-ui/core';
+import { List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
+import MessageIcon from '@material-ui/icons/Message';
 
 export default function MessageBox({messages}) {
   return (
     <div>
-      <Typography>Message Box</Typography>
-      { messages.map(data => {
-        return (<Card><Typography>{ data.userID }:{ data.message }</Typography></Card>);
-        })
-      }
+      <List>
+        { 
+          messages.map(data => {
+            return (
+              <ListItem>
+                <ListItemIcon><MessageIcon /></ListItemIcon>
+                <ListItemText primary={ data.userID + ":   " + data.message }/>
+              </ListItem>
+            );
+          })
+        }
+      </List>
     </div>
   )
 }

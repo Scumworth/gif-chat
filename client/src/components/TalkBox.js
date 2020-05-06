@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TalkBox({socket, userID}) {
+export default function TalkBox({socket, userID, loginStatus}) {
 
   const classes = useStyles();
   const[message, setMessage] = React.useState('');
@@ -24,15 +24,17 @@ export default function TalkBox({socket, userID}) {
   };
   
   const handleEnterKey = (event) => {
-    if(event.key == 'Enter' && message.length > 0) {
-      console.log('enter pressed');
+    if(event.key == 'Enter') {
+      event.preventDefault();
+    }
+    if(loginStatus && event.key == 'Enter' && message.length > 0) {
       socket.emit('ADD_MESSAGE', {message, userID});
       setMessage("");
     }
   }
 
   const handleClick = (event) => {
-    if(message.length > 0) {
+    if(loginStatus && message.length > 0) {
       socket.emit('ADD_MESSAGE', {message, userID});
       setMessage("");
     }
@@ -50,6 +52,7 @@ export default function TalkBox({socket, userID}) {
               variant="outlined"
               onChange={handleChange}
               onKeyPress={handleEnterKey}
+              value={message}
               label="Enter message here..."
             />
           </Grid>

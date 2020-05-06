@@ -70,7 +70,11 @@ export default function App() {
           <MessageBox messages={messages} />
         </Grid>
       </Grid>
-      <TalkBox userID = {userState.userID} socket={socket}/>
+      <TalkBox 
+        userID = {userState.userID} 
+        loginStatus = {userState.loginStatus}
+        socket={socket}
+      />
       <GifBox />
       <Footer />
     </div>
