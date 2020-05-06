@@ -26,13 +26,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header({userID, setUserState, socket, loginStatus}) {
+export default function Header({userID, loginInput, setUserState, socket, loginStatus}) {
   
-  const [loginInput, setLoginInput] = useState('');
   const classes = useStyles();
 
   const handleChange = (event) => {
-    setLoginInput(event.target.value);
+    setUserState({loginInput: event.target.value});
   }
   const handleEnterKey = (event) => {
     if(event.key == 'Enter' && loginInput.length > 0) {
@@ -46,7 +45,7 @@ export default function Header({userID, setUserState, socket, loginStatus}) {
   };
 
   const handleLogout = (event) => {
-    setUserState({userID: '', loginStatus: false});
+    setUserState({userID: '', loginInput: '', loginStatus: false});
   };
   
   return (

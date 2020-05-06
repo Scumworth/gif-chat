@@ -18,7 +18,7 @@ export default function App() {
   
   const [ userState, setUserState] = useReducer(
     (userState, newUserState) => ({...userState, ...newUserState}),
-    {userID: '', loginStatus: false}
+    {userID: '', loginInput: '', loginStatus: false}
   );
   const [ online, setOnline ] = useImmer([]);
   const [ messages, setMessages ] = useImmer([]);
@@ -53,10 +53,15 @@ export default function App() {
       });
     }
   }, []); // empty array as second argument in useEffect to only define on first render
-
   return (
     <div>
-      <Header userID={userState.userID} loginStatus = {userState.loginStatus} setUserState={setUserState}  socket={socket} />
+      <Header 
+        userID={userState.userID} 
+        loginStatus = {userState.loginStatus} 
+        loginInput = {userState.loginInput}
+        setUserState={setUserState}  
+        socket={socket} 
+      />
       <Grid container>
         <Grid item xs={12} md={3}>
           <UserBox/>
