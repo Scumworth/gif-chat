@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  greeting: {
+    fontSize: '11px'
+  },
   inputRoot: {
     color: 'inherit',
     width: '70%'
@@ -70,13 +73,13 @@ export default function Header({userID, loginInput, setUserState, socket, loginS
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
-                inputProps={{ 'aria-label': 'login' }}
+                inputProps={{ 'aria-label': 'login', maxLength: 15 }}
               />
               <Button onClick = {handleLogin} color="inherit">Login</Button>
               </div>
               : 
               <div>
-                <Typography> Hello { userID }</Typography>
+                <Typography className={classes.greeting}> Logged in as { userID }...</Typography>
                 <Button onClick={handleLogout} color="inherit">Logout</Button>
               </div>
           }

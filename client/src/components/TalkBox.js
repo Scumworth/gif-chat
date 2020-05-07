@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   largeIcon: {
-    width: 60,
-    height: 60,
+    width: 30,
+    height: 30,
   }
 }));
 
@@ -72,7 +72,7 @@ export default function TalkBox({socket, userID, loginStatus}) {
                   multiline 
                   className="inputField" 
                   variant="outlined" 
-                  label="Login to start chatting."
+                  label="Log in to start chatting."
                   rows={5} 
                 />
             }

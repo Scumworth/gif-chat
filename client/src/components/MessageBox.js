@@ -4,15 +4,14 @@ import { Box, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/co
 import MessageIcon from '@material-ui/icons/Message';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  messageList: {
     marginLeft: '0 auto',
-    width: '75%',
-    minHeight: '10px',
+    width: '80%',
     maxHeight: '400px',
     overflow: 'auto',
-    borderRadius: '5px',
+    padding: '5px'
   },
-  listWrapper: {
+  root: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -36,19 +35,36 @@ export default function MessageBox({messages}) {
   const classes = useStyles();
 
   return (
-    <Box className={classes.listWrapper}>
-      <List className={classes.root}>
+    <Box className={classes.root}>
+      <List className={classes.messageList}>
         { 
+          messages.length > 0 ?
           messages.map(data => {
             return (
               <Box className={classes.messageWrapper}>
                 <ListItem>
                   <ListItemIcon><MessageIcon /></ListItemIcon>
-                  <ListItemText primary={ data.userID + ":   " + data.message }/>
+                  <ListItemText 
+                    primary={ `${data.userID}` } 
+                    primaryTypographyProps={{ style: {fontSize: '14px', fontWeight: 'bold'} }}
+                    secondary={ `${data.message}` }
+                    secondaryTypographyProps={{ style: {fontSize: '18px', color: '#000000'} }}
+                  />
                 </ListItem>
               </Box>
             );
           })
+          : <Box className = {classes.messageWrapper}>
+              <ListItem>
+                <ListItemIcon><MessageIcon /></ListItemIcon>
+                <ListItemText
+                  primary="ChatBot"
+                  primaryTypographyProps={{ style: {fontSize: '14px', fontWeight: 'bold'} }}
+                  secondary="No one has sent any messages yet. Login and type a message below to start."
+                  secondaryTypographyProps={{ style: {fontSize: '18px', color: '#000000'} }}
+                />
+              </ListItem>
+            </Box>
         }
         <div ref={endChatWindowRef} />
       </List>

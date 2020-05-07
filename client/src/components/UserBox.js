@@ -16,14 +16,17 @@ export default function UserBox({online}) {
 
   return (
     <Box className= {classes.root}>
-      <Typography variant="overline">{online.length} users online.</Typography>
+      <Typography variant="overline">{online.length} user(s) online.</Typography>
         <List>
           {
             online.map(user => {
               return (
                 <ListItem>
                   <ListItemIcon><PersonIcon /></ListItemIcon>
-                  <ListItemText primary={user}/>
+                  <ListItemText 
+                    primary={user}
+                    primaryTypographyProps={{ style: {fontSize: '14px', fontStyle: 'italic'} }}
+                  />
                 </ListItem>
               );
             })
