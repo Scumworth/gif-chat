@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Grid, IconButton } from '@material-ui/core';
+import { Box, TextField, Grid, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SendIcon from '@material-ui/icons/Send';
 
@@ -12,6 +12,15 @@ const useStyles = makeStyles((theme) => ({
       width: '100%'
     }
   },
+  talkWrapper: {
+    margin: '0 auto',
+    width: '90%',
+    alignItems: 'center'
+  },
+  largeIcon: {
+    width: 50,
+    height: 50
+  }
 }));
 
 export default function TalkBox({socket, userID, loginStatus}) {
@@ -43,8 +52,8 @@ export default function TalkBox({socket, userID, loginStatus}) {
   return (
     <div id="testname" className={classes.root}>
       <form noValidate autoComplete="off">
-        <Grid container> 
-          <Grid item xs={10}>
+        <Grid className={classes.talkWrapper} container> 
+          <Grid item xs={11}>
             <TextField
               className="inputField"
               multiline
@@ -56,9 +65,9 @@ export default function TalkBox({socket, userID, loginStatus}) {
               label="Enter message here..."
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={1}>
             <IconButton onClick={handleClick} aria-label="post message">
-              <SendIcon fontSize="large" />
+              <SendIcon className={classes.largeIcon} />
             </IconButton>
           </Grid>
         </Grid>

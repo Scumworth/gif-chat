@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginLeft: '0 auto',
     width: '75%',
-    minHeight: '100px',
+    minHeight: '10px',
     maxHeight: '400px',
     overflow: 'auto',
     borderRadius: '5px',
