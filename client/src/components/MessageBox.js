@@ -42,10 +42,10 @@ export default function MessageBox({messages}) {
           messages.map(data => {
             return (
               <Box className={classes.messageWrapper}>
-              <ListItem>
-                <ListItemIcon><MessageIcon /></ListItemIcon>
-                <ListItemText primary={ data.userID + ":   " + data.message }/>
-              </ListItem>
+                <ListItem>
+                  <ListItemIcon><MessageIcon /></ListItemIcon>
+                  <ListItemText primary={ data.userID + ":   " + data.message }/>
+                </ListItem>
               </Box>
             );
           })

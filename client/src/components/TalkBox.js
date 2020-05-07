@@ -14,12 +14,13 @@ const useStyles = makeStyles((theme) => ({
   },
   talkWrapper: {
     margin: '0 auto',
-    width: '90%',
+    width: '80%',
+    maxWidth: '800px',
     alignItems: 'center'
   },
   largeIcon: {
-    width: 50,
-    height: 50
+    width: 60,
+    height: 60,
   }
 }));
 
@@ -54,21 +55,38 @@ export default function TalkBox({socket, userID, loginStatus}) {
       <form noValidate autoComplete="off">
         <Grid className={classes.talkWrapper} container> 
           <Grid item xs={11}>
-            <TextField
-              className="inputField"
-              multiline
-              rows={5}
-              variant="outlined"
-              onChange={handleChange}
-              onKeyPress={handleEnterKey}
-              value={message}
-              label="Enter message here..."
-            />
+            {
+              loginStatus ? 
+                <TextField
+                  className="inputField"
+                  multiline
+                  rows={5}
+                  variant="outlined"
+                  onChange={handleChange}
+                  onKeyPress={handleEnterKey}
+                  value={message}
+                  label="Enter message here..."
+                />
+              : <TextField 
+                  disabled
+                  multiline 
+                  className="inputField" 
+                  variant="outlined" 
+                  label="Login to start chatting."
+                  rows={5} 
+                />
+            }
           </Grid>
           <Grid item xs={1}>
-            <IconButton onClick={handleClick} aria-label="post message">
-              <SendIcon className={classes.largeIcon} />
-            </IconButton>
+            {
+              loginStatus ?
+                <IconButton onClick={handleClick} aria-label="post message">
+                  <SendIcon className={classes.largeIcon} />
+                </IconButton>
+              : <IconButton disabled onClick={handleClick} aria-label="post message">
+                <SendIcon className={classes.largeIcon} />
+                </IconButton>
+            }
           </Grid>
         </Grid>
       </form>

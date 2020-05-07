@@ -6,7 +6,8 @@ import PersonIcon from '@material-ui/icons/Person';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '5px',
-  }
+    marginTop: '10px',
+  },
 }));
 
 export default function UserBox({online}) {
