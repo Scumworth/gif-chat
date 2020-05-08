@@ -17,8 +17,8 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server);
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'pug');
 
 app.use(cors());
 app.use(logger('dev'));
