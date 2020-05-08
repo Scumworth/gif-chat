@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.config({path:__dirname+'/./../.env'});
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -8,6 +10,7 @@ const cors = require('cors');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const testAPIRouter = require('./routes/testAPI');
+const gifRouter = require('./routes/gif');
 
 const app = express();
 const server = require('http').Server(app)
@@ -27,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/testAPI', testAPIRouter);
+app.use('/api/gif', gifRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

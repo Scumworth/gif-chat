@@ -11,6 +11,7 @@ import TalkBox from './TalkBox'
 import Header from './Header'
 import Footer from './Footer';
 
+const axios = require('axios');
 const io = require('socket.io-client');
 const socket = io('http://localhost:9000');
 const useStyles = makeStyles((theme) => ({
@@ -29,14 +30,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function App() {
-  
   const [ userState, setUserState] = useReducer(
     (userState, newUserState) => ({...userState, ...newUserState}),
     {userID: '', loginInput: '', loginStatus: false}
   );
   const [ online, setOnline ] = useImmer([]);
   const [ messages, setMessages ] = useImmer([]);
+  const [ gif, setGif ] = useState('')
   const classes = useStyles();
+
+  useEffect(() => {
+    let recentMessage;
+    if (messages.length > 0) {
+      recentMessage = messages[messages.length - 1].message;
+    }
+    else {
+      recentMessage = "nothing";
+    }
+
+    axios.get('/api/gif', { params: { message: recentMessage }} )  
+    .then(res => setGif(res.data))
+    .catch(error => console.log(error))
+  },[messages]);
 
   useEffect(() => {
 
@@ -91,7 +106,7 @@ export default function App() {
           loginStatus = {userState.loginStatus}
           socket={socket}
         />
-        <GifBox />
+        <GifBox gif={gif}/>
       </div>
       <Footer />
     </div>
