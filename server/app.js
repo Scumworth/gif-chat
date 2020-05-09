@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-dotenv.config({path:__dirname+'/./../.env'});
+// dotenv.config({path:__dirname+'/./../.env'});
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -77,7 +77,7 @@ io.on('connection', socket => {
 if (process.env.NODE_ENV == 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
   app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+      res.sendFile(path.join(__dirname, '../client/build/index.html'));
   });
 }
 
