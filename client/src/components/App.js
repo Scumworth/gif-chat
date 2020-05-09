@@ -13,7 +13,8 @@ import Footer from './Footer';
 
 const axios = require('axios');
 const io = require('socket.io-client');
-const socket = io('http://localhost:9000');
+// const socket = io('http://localhost:9000');
+const socket = io('https://gif-chat-app.herokuapp.com/');
 const useStyles = makeStyles((theme) => ({
   appWrapper: {
     minWidth: '320px',
