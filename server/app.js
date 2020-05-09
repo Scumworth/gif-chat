@@ -33,7 +33,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/testAPI', testAPIRouter);
 app.use('/api/gif', gifRouter);
 
-catch 404 and forward to error handler
+// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
