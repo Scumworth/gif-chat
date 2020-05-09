@@ -61,6 +61,7 @@ io.on('connection', socket => {
 
   socket.on('DISCONNECT', function(data) {
     console.log(`${data.userID} has disconnected`);
+    io.emit('REMOVE_USER', userID)
   });
 
   socket.on('ADD_MESSAGE', function(data) {
