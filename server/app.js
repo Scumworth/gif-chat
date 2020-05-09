@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-dotenv.config({path:__dirname+'/./../.env'});
+// dotenv.config({path:__dirname+'/./../.env'});
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -33,7 +33,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/testAPI', testAPIRouter);
 app.use('/api/gif', gifRouter);
 
-// catch 404 and forward to error handler
+catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
@@ -77,7 +77,7 @@ io.on('connection', socket => {
 if (process.env.NODE_ENV == 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
   app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+      res.sendFile(path.join(__dirname, '../client/build/index.html'));
   });
 }
 
