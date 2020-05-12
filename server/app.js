@@ -12,7 +12,6 @@ const cors = require('cors');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const testAPIRouter = require('./routes/testAPI');
-const gifRouter = require('./routes/gif');
 
 const app = express();
 const server = require('http').Server(app)
@@ -35,7 +34,6 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 app.use('/api', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/testAPI', testAPIRouter);
-app.use('/api/gif', gifRouter);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));

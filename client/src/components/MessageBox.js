@@ -39,12 +39,12 @@ export default function MessageBox({messages}) {
       <List className={classes.messageList}>
         { 
           messages.length > 0 ?
-          messages.map(data => {
+          messages.map((data, i) => {
             return (
-              <Box className={classes.messageWrapper}>
-                <ListItem>
-                  <ListItemIcon><MessageIcon /></ListItemIcon>
-                  <ListItemText 
+              <Box key={i} className={classes.messageWrapper}>
+                <ListItem key={i}>
+                  <ListItemIcon key={i}><MessageIcon /></ListItemIcon>
+                  <ListItemText key ={i}
                     primary={ `${data.userID}` } 
                     primaryTypographyProps={{ style: {fontSize: '14px', fontWeight: 'bold'} }}
                     secondary={ `${data.message}` }
