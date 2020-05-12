@@ -21,7 +21,7 @@ if(process.env.NODE_ENV === 'development') {
 else if(process.env.NODE_ENV === 'production') {
   socketURL = 'https://gif-chat-app.herokuapp.com/';
 }
-const socket = io(socketURL);
+const socket = io.connect(socketURL, { 'sync disconnect on unload': true });
 
 const useStyles = makeStyles((theme) => ({
   appWrapper: {
@@ -47,7 +47,7 @@ export default function App() {
   const [ messages, setMessages ] = useImmer([]);
   const [ gif, setGif ] = useState('')
   const classes = useStyles();
-
+  
   useEffect(() => {
     let recentMessage;
     if (messages.length > 0) {
@@ -101,9 +101,7 @@ export default function App() {
 
     // diconnect socket when component unmounts
     return () => {
-      socket.emit('DISCONNECT', {
-        userID: userState.userID
-      });
+      socket.emit('disconnect');
     }
   }, []); // empty array as second argument in useEffect to only define on first render
 
@@ -137,3 +135,4 @@ export default function App() {
   );
 
 }
+

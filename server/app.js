@@ -61,15 +61,18 @@ let allUsers = [];
 // socket 
 io.on('connection', socket => {
 
+  let currentUser;
+
   console.log('a client has connected');
   
   socket.emit('INITIALIZE_USERS', allUsers);
 
   socket.emit('INITIALIZE_MESSAGES', allMessages)
 
-  socket.on('DISCONNECT', function(data) {
-    allUsers = allUsers.filter(user => user !== data.userID);
-    console.log(`${data.userID} has disconnected`);
+  socket.on('disconnect', function() {
+    allUsers = allUsers.filter(user => user !== currentUser);
+    console.log(`${currentUser} has disconnected`);
+    io.emit('REMOVE_USER', currentUser)
   });
 
   socket.on('ADD_MESSAGE', function(data) {
@@ -79,6 +82,7 @@ io.on('connection', socket => {
 
   socket.on('ADD_USER', function(userID) {
     console.log('Adding user');
+    currentUser = userID;
     allUsers.push(userID);
     io.emit('RECEIVE_USER', userID)
   });
