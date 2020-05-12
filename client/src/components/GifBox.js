@@ -17,7 +17,7 @@ export default function GifBox({gif}) {
   const classes = useStyles();
   return (
     <Box className={classes.root}>
-      <iframe src={gif} width="50%" height="250px" frameborder="0"></iframe>
+      <iframe title="gifDisplay" src={gif} width="50%" height="250px" frameborder="0"></iframe>
     </Box>
   );
 }

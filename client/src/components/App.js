@@ -13,8 +13,16 @@ import Footer from './Footer';
 
 const axios = require('axios');
 const io = require('socket.io-client');
-// const socket = io('http://localhost:9000');
-const socket = io('https://gif-chat-app.herokuapp.com/');
+
+let socketURL;
+if(process.env.NODE_ENV === 'development') {
+  socketURL = 'http://localhost:9000';
+}
+else if(process.env.NODE_ENV === 'production') {
+  socketURL = 'https://gif-chat-app.herokuapp.com/';
+}
+const socket = io(socketURL);
+
 const useStyles = makeStyles((theme) => ({
   appWrapper: {
     minWidth: '320px',
@@ -59,6 +67,18 @@ export default function App() {
     // connect socket when component mounts
     socket.connect(); 
 
+    socket.on('INITIALIZE_USERS', userArray => {
+      setOnline(draft => {
+        draft = userArray
+      });
+    });
+
+    socket.on('INITIALIZE_MESSAGES', messageArray => {
+      setOnline(draft => {
+        draft = messageArray;
+      });
+    });
+
     socket.on('RECEIVE_USER', userID => {
       setOnline(draft => {
         draft.push(userID);
@@ -67,7 +87,7 @@ export default function App() {
 
     socket.on('REMOVE_USER', userID => {
       setOnline(draft => {
-        return draft.filter(user => user != userID);
+        return draft.filter(user => user !== userID);
       });
     });
 

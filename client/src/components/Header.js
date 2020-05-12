@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { InputBase, AppBar, Toolbar, Typography, Button } from '@material-ui/core';
 
@@ -38,7 +38,7 @@ export default function Header({userID, loginInput, setUserState, socket, loginS
     setUserState({loginInput: event.target.value});
   }
   const handleEnterKey = (event) => {
-    if(event.key == 'Enter' && loginInput.length > 0) {
+    if(event.key === 'Enter' && loginInput.length > 0) {
       socket.emit('ADD_USER', loginInput);
       setUserState({userID: loginInput, loginStatus: true});
     }
