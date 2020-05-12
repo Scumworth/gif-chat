@@ -66,18 +66,18 @@ export default function App() {
 
     // connect socket when component mounts
     socket.connect(); 
-    socket.emit('REQUEST_USERS');
-    socket.emit('REQUEST_MESSAGES');
 
     socket.on('INITIALIZE_USERS', userArray => {
+      console.log('Initial users retrieved.');
       setOnline(draft => {
-        draft = userArray
+        return userArray
       });
     });
 
     socket.on('INITIALIZE_MESSAGES', messageArray => {
+      console.log('Initial messages retrieved.');
       setOnline(draft => {
-        draft = messageArray;
+        return messageArray;
       });
     });
 
