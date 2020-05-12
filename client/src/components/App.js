@@ -66,6 +66,8 @@ export default function App() {
 
     // connect socket when component mounts
     socket.connect(); 
+    socket.emit('REQUEST_USERS');
+    socket.emit('REQUEST_MESSAGES');
 
     socket.on('INITIALIZE_USERS', userArray => {
       setOnline(draft => {
