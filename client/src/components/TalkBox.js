@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, TextField, Grid, IconButton } from '@material-ui/core';
+import { TextField, Grid, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SendIcon from '@material-ui/icons/Send';
 
@@ -34,10 +34,10 @@ export default function TalkBox({socket, userID, loginStatus}) {
   };
   
   const handleEnterKey = (event) => {
-    if(event.key == 'Enter') {
+    if(event.key === 'Enter') {
       event.preventDefault();
     }
-    if(loginStatus && event.key == 'Enter' && message.length > 0) {
+    if(loginStatus && event.key === 'Enter' && message.length > 0) {
       socket.emit('ADD_MESSAGE', {message, userID});
       setMessage("");
     }

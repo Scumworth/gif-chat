@@ -1,5 +1,7 @@
-const dotenv = require('dotenv');
-// dotenv.config({path:__dirname+'/./../.env'});
+if(process.env.NODE_ENV === 'development') {
+  const dotenv = require('dotenv');
+  dotenv.config({path:__dirname+'/./../.env'});
+}
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -54,27 +56,36 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+let allMessages = [];
+let allUsers = [];
 // socket 
 io.on('connection', socket => {
 
   console.log('a client has connected');
 
+  io.emit('INITIALIZE_USERS', allUsers);
+
+  io.emit('INITIALIZE_MESSAGES', allMessages)
+
   socket.on('DISCONNECT', function(data) {
+    allUsers = allUsers.filter(user => user !== data.userID);
     console.log(`${data.userID} has disconnected`);
-    io.emit('REMOVE_USER', data.userID)
   });
 
   socket.on('ADD_MESSAGE', function(data) {
     console.log('message received by server');
+    allMessages.push(data);
     io.emit('RECEIVE_MESSAGE', data) });
 
   socket.on('ADD_USER', function(userID) {
     console.log('Adding user');
+    allUsers.push(userID);
     io.emit('RECEIVE_USER', userID)
   });
 
   socket.on('LOGOUT_USER', function(userID) {
     console.log('Removing user');
+    allUsers = allUsers.filter(user => user !== userID);
     io.emit('REMOVE_USER', userID)
   });
 
