@@ -68,15 +68,15 @@ export default function App() {
     socket.connect(); 
 
     socket.on('INITIALIZE_USERS', userArray => {
-      console.log('Initial users retrieved.');
+      console.log('Initial users retrieved.', userArray);
       setOnline(draft => {
-        return userArray
+        return userArray;
       });
     });
 
     socket.on('INITIALIZE_MESSAGES', messageArray => {
-      console.log('Initial messages retrieved.');
-      setOnline(draft => {
+      console.log('Initial messages retrieved.', messageArray);
+      setMessages(draft => {
         return messageArray;
       });
     });
@@ -106,6 +106,7 @@ export default function App() {
       });
     }
   }, []); // empty array as second argument in useEffect to only define on first render
+
   return (
     <div className = { classes.appWrapper }>
       <div className={ classes.contentWrapper }>

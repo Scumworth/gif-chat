@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 export default function UserBox({online}) {
 
   const classes = useStyles();
-
+  console.log('online', online);
   return (
     <Box className= {classes.root}>
       <Typography variant="overline">{online.length} user(s) online.</Typography>
