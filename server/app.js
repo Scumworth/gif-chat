@@ -17,6 +17,7 @@ const gifRouter = require('./routes/gif');
 const app = express();
 const server = require('http').Server(app)
 const io = require('socket.io')(server);
+const giphy = require('giphy-api')(process.env.GIPHY_API_KEY);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -58,6 +59,8 @@ app.use(function(err, req, res, next) {
 
 let allMessages = [];
 let allUsers = [];
+let currentGif = "https://giphy.com/embed/kzxOVNpKLWDyL9tTTn";
+
 // socket 
 io.on('connection', socket => {
 
@@ -69,6 +72,8 @@ io.on('connection', socket => {
 
   socket.emit('INITIALIZE_MESSAGES', allMessages)
 
+  socket.emit('INITIALIZE_GIF', currentGif);
+
   socket.on('disconnect', function() {
     allUsers = allUsers.filter(user => user !== currentUser);
     console.log(`${currentUser} has disconnected`);
@@ -78,7 +83,12 @@ io.on('connection', socket => {
   socket.on('ADD_MESSAGE', function(data) {
     console.log('message received by server');
     allMessages.push(data);
-    io.emit('RECEIVE_MESSAGE', data) });
+    io.emit('RECEIVE_MESSAGE', data) 
+    giphy.search(data.message).then(function(giphyResponse) {
+      currentGif = giphyResponse.data[Math.floor(Math.random() * giphyResponse.data.length)].embed_url;
+      io.emit('RECEIVE_GIF', currentGif);
+    }).catch(e => console.log(e));
+  });
 
   socket.on('ADD_USER', function(userID) {
     console.log('Adding user');

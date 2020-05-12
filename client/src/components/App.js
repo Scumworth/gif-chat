@@ -49,20 +49,6 @@ export default function App() {
   const classes = useStyles();
   
   useEffect(() => {
-    let recentMessage;
-    if (messages.length > 0) {
-      recentMessage = messages[messages.length - 1].message;
-    }
-    else {
-      recentMessage = "nothing";
-    }
-
-    axios.get('/api/gif', { params: { message: recentMessage }} )  
-    .then(res => setGif(res.data))
-    .catch(error => console.log(error))
-  },[messages]);
-
-  useEffect(() => {
 
     // connect socket when component mounts
     socket.connect(); 
@@ -81,6 +67,11 @@ export default function App() {
       });
     });
 
+    socket.on('INITIALIZE_GIF', gifURL => {
+      console.log('Initial GIF received from server.');
+      setGif(gifURL);
+    });
+
     socket.on('RECEIVE_USER', userID => {
       setOnline(draft => {
         draft.push(userID);
@@ -97,6 +88,11 @@ export default function App() {
       setMessages(draft => {
         draft.push({userID: data.userID , message: data.message});
       });
+    });
+
+    socket.on('RECEIVE_GIF', gifURL => {
+      console.log('New gif received from server');
+      setGif(gifURL);
     });
 
     // diconnect socket when component unmounts
