@@ -63,9 +63,9 @@ io.on('connection', socket => {
 
   console.log('a client has connected');
   
-  io.emit('INITIALIZE_USERS', allUsers);
+  socket.emit('INITIALIZE_USERS', allUsers);
 
-  io.emit('INITIALIZE_MESSAGES', allMessages)
+  socket.emit('INITIALIZE_MESSAGES', allMessages)
 
   socket.on('DISCONNECT', function(data) {
     allUsers = allUsers.filter(user => user !== data.userID);
